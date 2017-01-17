@@ -15,10 +15,12 @@
   ori     $11, $0, 0x0006
   push    $11
 
+  # $8 - result, $9 & $10 - operands
   ori     $8, $0, 0x0000
   pop     $9
   pop     $10
 
+  # start of while loop
   beq     $10, $0, Exit
 Loop:
   addu    $8, $8, $9
