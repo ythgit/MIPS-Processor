@@ -70,10 +70,10 @@ module alu_tb;
       a.aluop = ALU_SLL;
       #(1*PERIOD);
       assert (tb_o == a.port_o)
-        $info ("SLL test passed: %d << %d", pa, pb);
+        $display ("SLL test passed: %d << %d", pa, pb);
       else
         $error ("SLL test failed: %d << %d", pa, pb);
-      $info ("Flag bits: %1d %1d %1d", a.flag_negative, a.flag_overflow, a.flag_zero);
+      $display ("Flag bits: %1d %1d %1d", a.flag_negative, a.flag_overflow, a.flag_zero);
     end
   endtask
 
@@ -88,10 +88,10 @@ module alu_tb;
       a.aluop = ALU_SRL;
       #(1*PERIOD);
       assert (tb_o == a.port_o)
-        $info ("SRL test passed: %d >> %d", pa, pb);
+        $display ("SRL test passed: %d >> %d", pa, pb);
       else
         $error ("SRL test failed: %d >> %d", pa, pb);
-      $info ("Flag bits: %1d %1d %1d", a.flag_negative, a.flag_overflow, a.flag_zero);
+      $display ("Flag bits: %1d %1d %1d", a.flag_negative, a.flag_overflow, a.flag_zero);
     end
   endtask
 
@@ -106,10 +106,10 @@ module alu_tb;
       a.aluop = ALU_ADD;
       #(1*PERIOD);
       assert (tb_o == a.port_o)
-        $info ("ADD test passed: %d + %d", pa, pb);
+        $display ("ADD test passed: %d + %d", pa, pb);
       else
         $error ("ADD test failed: %d + %d", pa, pb);
-      $info ("Flag bits: %1d %1d %1d", a.flag_negative, a.flag_overflow, a.flag_zero);
+      $display ("Flag bits: %1d %1d %1d", a.flag_negative, a.flag_overflow, a.flag_zero);
     end
   endtask
 
@@ -124,10 +124,10 @@ module alu_tb;
       a.aluop = ALU_SUB;
       #(1*PERIOD);
       assert (tb_o == a.port_o)
-        $info ("SUB test passed: %d - %d", pa, pb);
+        $display ("SUB test passed: %d - %d", pa, pb);
       else
         $error ("SUB test failed: %d - %d", pa, pb);
-      $info ("Flag bits: %1d %1d %1d", a.flag_negative, a.flag_overflow, a.flag_zero);
+      $display ("Flag bits: %1d %1d %1d", a.flag_negative, a.flag_overflow, a.flag_zero);
     end
   endtask
 
@@ -142,10 +142,10 @@ module alu_tb;
       a.aluop = ALU_AND;
       #(1*PERIOD);
       assert (tb_o == a.port_o)
-        $info ("AND test passed: %d & %d", pa, pb);
+        $display ("AND test passed: %d & %d", pa, pb);
       else
         $error ("AND test failed: %d & %d", pa, pb);
-      $info ("Flag bits: %1d %1d %1d", a.flag_negative, a.flag_overflow, a.flag_zero);
+      $display ("Flag bits: %1d %1d %1d", a.flag_negative, a.flag_overflow, a.flag_zero);
     end
   endtask
 
@@ -160,10 +160,10 @@ module alu_tb;
       a.aluop = ALU_OR;
       #(1*PERIOD);
       assert (tb_o == a.port_o)
-        $info ("OR test passed: %d | %d", pa, pb);
+        $display ("OR test passed: %d | %d", pa, pb);
       else
         $error ("OR test failed: %d | %d", pa, pb);
-      $info ("Flag bits: %1d %1d %1d", a.flag_negative, a.flag_overflow, a.flag_zero);
+      $display ("Flag bits: %1d %1d %1d", a.flag_negative, a.flag_overflow, a.flag_zero);
     end
   endtask
 
@@ -178,10 +178,10 @@ module alu_tb;
       a.aluop = ALU_XOR;
       #(1*PERIOD);
       assert (tb_o == a.port_o)
-        $info ("XOR test passed: %d ^ %d", pa, pb);
+        $display ("XOR test passed: %d ^ %d", pa, pb);
       else
         $error ("XOR test failed: %d ^ %d", pa, pb);
-      $info ("Flag bits: %1d %1d %1d", a.flag_negative, a.flag_overflow, a.flag_zero);
+      $display ("Flag bits: %1d %1d %1d", a.flag_negative, a.flag_overflow, a.flag_zero);
     end
   endtask
 
@@ -196,10 +196,10 @@ module alu_tb;
       a.aluop = ALU_NOR;
       #(1*PERIOD);
       assert (tb_o == a.port_o)
-        $info ("NOR test passed: %d ~| %d", pa, pb);
+        $display ("NOR test passed: %d ~| %d", pa, pb);
       else
         $error ("NOR test failed: %d ~| %d", pa, pb);
-      $info ("Flag bits: %1d %1d %1d", a.flag_negative, a.flag_overflow, a.flag_zero);
+      $display ("Flag bits: %1d %1d %1d", a.flag_negative, a.flag_overflow, a.flag_zero);
     end
   endtask
 
@@ -217,10 +217,10 @@ module alu_tb;
       a.aluop = ALU_SLT;
       #(1*PERIOD);
       assert (tb_o == a.port_o)
-        $info ("SLT test passed: %d < %d", pa, pb);
+        $display ("SLT test passed: %d < %d", pa, pb);
       else
         $error ("SLT test failed: %d < %d", pa, pb);
-      $info ("Flag bits: %1d %1d %1d", a.flag_negative, a.flag_overflow, a.flag_zero);
+      $display ("Flag bits: %1d %1d %1d", a.flag_negative, a.flag_overflow, a.flag_zero);
     end
   endtask
 
@@ -238,10 +238,10 @@ module alu_tb;
       a.aluop = ALU_SLTU;
       #(1*PERIOD);
       assert (tb_o == a.port_o)
-        $info ("SLTU test passed: %d < %d", pa, pb);
+        $display ("SLTU test passed: %d < %d", pa, pb);
       else
         $error ("SLTU test failed: %d < %d", pa, pb);
-      $info ("Flag bits: %1d %1d %1d", a.flag_negative, a.flag_overflow, a.flag_zero);
+      $display ("Flag bits: %1d %1d %1d", a.flag_negative, a.flag_overflow, a.flag_zero);
     end
   endtask
 

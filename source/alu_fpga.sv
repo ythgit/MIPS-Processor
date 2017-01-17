@@ -29,10 +29,10 @@ module alu_fpga(
   // DUT
   alu DUT(a);
 
-  assign a.port_a = {16{SW[16]}, SW[15:0]};
+  assign a.port_a = {{16{SW[16]}}, SW[15:0]};
   assign b_reg = SW[17] && a.port_a || (~SW[17]) && b_reg;
   assign a.port_b = b_reg;
-  assign a.aluop = KEY[3:0];
+  assign a.aluop = aluop_t'(~KEY[3:0]);
 
   assign LEDR[2] = a.flag_negative;
   assign LEDR[1] = a.flag_overflow;
