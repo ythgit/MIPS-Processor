@@ -22,4 +22,30 @@ module memory_control (
   // number of cpus for cc
   parameter CPUS = 2;
 
+
+  // ready signals - inverse of wait signals
+  logic [CPUS-1:0] iready, dready;
+  assign ccif.iwait = ~iready;
+  assign ccif.dwait = ~dready;
+
+  // cache outputs
+  assign iready = (ccif.iREN && ~ccif.dREN && ~ccif.dWEN) &&
+                  (ccif.ramstate == ACCESS);
+  assign dready = (ccif.dREN || ccif.dWEN) &&
+                  (ccif.ramstate == ACCESS);
+  assign ccif.iload = ccif.ramload;
+  assign ccif.dload = ccif.ramload;
+
+  // ram outputs
+  assign ccif.ramstore = ccif.dstore;
+  assign ccif.ramaddr = (ccif.dREN || ccif.dWEN) ? ccif.daddr : ccif.iaddr;
+  assign ccif.ramWEN = ccif.dWEN;
+  assign ccif.ramREN = ccif.iREN || ccif.dREN;
+
+  // coherence outputs to cache - unused for singlecycle
+  assign ccif.ccwait = '0;
+  assign ccif.ccinv = '0;
+  assign ccif.ccsnoopaddr = '0;
+
+
 endmodule
