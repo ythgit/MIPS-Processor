@@ -13,7 +13,6 @@
 `include "cpu_types_pkg.vh"
 
 module memory_control (
-  input CLK, nRST,
   cache_control_if.cc ccif
 );
   // type import
@@ -29,18 +28,18 @@ module memory_control (
   assign ccif.dwait = ~dready;
 
   // cache outputs
-  assign iready = (ccif.iREN && ~ccif.dREN && ~ccif.dWEN) &&
+  assign iready = (ccif.iREN & ~ccif.dREN & ~ccif.dWEN) &
                   (ccif.ramstate == ACCESS);
-  assign dready = (ccif.dREN || ccif.dWEN) &&
+  assign dready = (ccif.dREN | ccif.dWEN) &
                   (ccif.ramstate == ACCESS);
   assign ccif.iload = ccif.ramload;
   assign ccif.dload = ccif.ramload;
 
   // ram outputs
   assign ccif.ramstore = ccif.dstore;
-  assign ccif.ramaddr = (ccif.dREN || ccif.dWEN) ? ccif.daddr : ccif.iaddr;
+  assign ccif.ramaddr = (ccif.dREN | ccif.dWEN) ? ccif.daddr : ccif.iaddr;
   assign ccif.ramWEN = ccif.dWEN;
-  assign ccif.ramREN = ccif.iREN || ccif.dREN;
+  assign ccif.ramREN = ccif.iREN | ccif.dREN;
 
   // coherence outputs to cache - unused for singlecycle
   assign ccif.ccwait = '0;
