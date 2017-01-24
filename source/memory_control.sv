@@ -39,7 +39,7 @@ module memory_control (
   assign ccif.ramstore = ccif.dstore;
   assign ccif.ramaddr = (ccif.dREN | ccif.dWEN) ? ccif.daddr : ccif.iaddr;
   assign ccif.ramWEN = ccif.dWEN;
-  assign ccif.ramREN = ccif.iREN | ccif.dREN;
+  assign ccif.ramREN = (ccif.iREN | ccif.dREN) & ~ccif.dWEN;
 
   // coherence outputs to cache - unused for singlecycle
   assign ccif.ccwait = '0;

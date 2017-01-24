@@ -272,6 +272,52 @@ module memory_control_tb;
   end
   endtask
 
+  // dump from ram
+  task automatic dump_memory();
+    string filename = "mem.hex";
+    int memfd;
+
+    //syif.addr = 0;
+    //syif.WEN = 0;
+    //syif.REN = 0;
+
+    memfd = $fopen(filename,"w");
+    if (memfd)
+      $display("Starting memory dump.");
+    else
+      begin $display("Failed to open %s.",filename); $finish; end
+
+    for (int unsigned i = 0; memfd && i < 16384; i++)
+    begin
+      int chksum = 0;
+      bit [7:0][7:0] values;
+      string ihex;
+
+      dread(i<<2);
+      //syif.addr = i << 2;
+      //syif.REN = 1;
+      //repeat (4) @(posedge CLK);
+      @(negedge cif.dwait);
+      #(1*PERIOD);
+      if (cif.dload === 0)
+        continue;
+      values = {8'h04,16'(i),8'h00,cif.dload};
+      foreach (values[j])
+        chksum += values[j];
+      chksum = 16'h100 - chksum;
+      ihex = $sformatf(":04%h00%h%h",16'(i),cif.dload,8'(chksum));
+      $fdisplay(memfd,"%s",ihex.toupper());
+    end //for
+    if (memfd)
+    begin
+      cif.dREN = 0;
+      $fdisplay(memfd,":00000001FF");
+      $fclose(memfd);
+      $display("Finished memory dump.");
+    end
+  endtask
+
+
 endmodule
 
 program test(
@@ -298,6 +344,9 @@ begin
   $display("Testing 2 simultaneous signals...");
   ri_rd;
   ri_wd;
+
+  $display("Dumping from memory...");
+  dump_memory;
 
 end
 endprogram
