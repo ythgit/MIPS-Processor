@@ -14,18 +14,18 @@ interface pc_if;
   // import types
   import cpu_types_pkg::*;
 
-  logic  WEN;
+  logic  WEN, halt;
   word_t pci, pco;
 
   // program counter ports
   modport pc (
-    input WEN, pci,
+    input WEN, halt, pci,
     output pco
   );
   //register file tb
   modport tb (
     input pco,
-    output WEN, pci
+    output WEN, halt, pci
   );
 endinterface
 
