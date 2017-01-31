@@ -81,25 +81,33 @@ program test(
 
 initial
 begin
+  // Initialize
   init;
 
+  // Testing when ihit is high, next dREN* should be dREN
   @(posedge CLK);
   ruif.dRENi = 1'b1;
   set_ihit;
   @(posedge CLK);
   if (ruif.dRENo == 1'b1) $display("INFO: dRENo sets correctly");
   else $display("ERROR: dRENo doesn't set");
+
+  // Testing when dhit is high, next dREN* should be masked out to 0
   ruif.ihit =1'b0;
   set_dhit;
   @(posedge CLK);
   if (ruif.dRENo == 1'b0) $display("INFO: dRENo masks out correctly");
   else $display("ERROR: dRENo doesn't mask out");
+
+  // Testing when ihit is high again, next dREN* should not be masked out
+  // anymore
   set_ihit;
   @(posedge CLK);
   if (ruif.dRENo == 1'b1) $display("INFO: dRENo sets correctly");
   else $display("ERROR: dRENo doesn't set");
-  rst;
 
+  // Finish
+  rst;
 end
 
 endprogram
