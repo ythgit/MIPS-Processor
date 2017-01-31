@@ -183,7 +183,14 @@ module datapath (
   assign dpif.dmemstore = busB;
   assign dpif.imemaddr = pcif.pco;
   assign dpif.dmemaddr = ALUo;
-  assign dpif.halt = cuif.halt;
   assign dpif.datomic = '0; // unused
+
+    // make halt signal a reg
+  always_ff @ (posedge CLK, negedge nRST) begin
+    if (nRST == 0)
+      dpif.halt <= 1'b0;
+    else if (cuif.halt == 1'b1)
+      dpif.halt <= cuif.halt;
+  end
 
 endmodule
