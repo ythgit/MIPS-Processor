@@ -85,9 +85,11 @@ begin
 
   @(posedge CLK);
   ruif.dRENi = 1'b1;
+  set_ihit;
   @(posedge CLK);
   if (ruif.dRENo == 1'b1) $display("INFO: dRENo sets correctly");
   else $display("ERROR: dRENo doesn't set");
+  ruif.ihit =1'b0;
   set_dhit;
   @(posedge CLK);
   if (ruif.dRENo == 1'b0) $display("INFO: dRENo masks out correctly");

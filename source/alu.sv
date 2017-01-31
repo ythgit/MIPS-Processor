@@ -17,11 +17,14 @@ module alu(
 // import types
 import cpu_types_pkg::*;
 
+assign a.flag_negative = a.port_o[31];
+assign a.flag_zero = (a.port_o == 0) ? 1'b1 : 1'b0;
+
 // alu's combinational logic
 always_comb begin
   a.flag_overflow = 1'b0;
-  a.flag_negative = a.port_o[31];
-  a.flag_zero = a.port_o == 32'b0;
+  //a.flag_negative = a.port_o[31];
+  //a.flag_zero = (a.port_o == 32'b0);
   casez(a.aluop)
     ALU_SLL: begin
       a.port_o = a.port_a << a.port_b;

@@ -101,6 +101,8 @@ module control_unit (
         if (iti.opcode == BEQ || iti.opcode == BNE) begin
           cuif.RegWEN = 1'b0;
           cuif.ALUSrc = 1'b0;
+          if (iti.opcode == BEQ) cuif.opfunc = OBEQ;
+          else cuif.opfunc = OBNE;
         end
 
         if (iti.opcode == LUI) begin
