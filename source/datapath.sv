@@ -105,6 +105,8 @@ module datapath (
   // connections
     // control_unit input related:
   assign cuif.instr = dpif.imemload;
+  assign cuif.ihit = dpif.ihit;
+  assign cuif.dhit = dpif.dhit;
   assign rs = rti.rs;
   assign rt = rti.rt;
   assign rd = rti.rd;

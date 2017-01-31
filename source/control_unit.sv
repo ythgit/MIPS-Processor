@@ -53,7 +53,7 @@ module control_unit (
         cuif.RegDst = RD;
         cuif.ALUSrc = 1'b0;
         cuif.MemtoReg = ALUO;
-        cuif.RegWEN = 1'b1;
+        cuif.RegWEN = cuif.ihit;
         cuif.dWENi = 1'b0;
         cuif.dRENi = 1'b0;
         cuif.ExtOp = SHAMEXT;
@@ -91,7 +91,7 @@ module control_unit (
         cuif.RegDst = RT;
         cuif.ALUSrc = 1'b1;
         cuif.MemtoReg = ALUO;
-        cuif.RegWEN = 1'b1;
+        cuif.RegWEN = cuif.ihit;
         cuif.dWENi = 1'b0;
         cuif.dRENi = 1'b0;
         cuif.ExtOp = SIGNEXT;
@@ -112,6 +112,7 @@ module control_unit (
 
         if (iti.opcode == LW) begin
           cuif.MemtoReg = DLOAD;
+          cuif.RegWEN = cuif.dhit;
           cuif.dRENi = 1'b1;
         end
 
@@ -145,7 +146,7 @@ module control_unit (
         cuif.RegDst = R31;
         cuif.ALUSrc = 1'b0;
         cuif.MemtoReg = NPC;
-        cuif.RegWEN = 1'b1;
+        cuif.RegWEN = cuif.ihit;
         cuif.dWENi = 1'b0;
         cuif.dRENi = 1'b0;
         cuif.ALUOp = ALU_AND;
@@ -174,6 +175,8 @@ module control_unit (
         cuif.opfunc = OTHERI;
         cuif.halt = 1'b1;
 
+        //if (cuif.instr == 32'b1) cuif.halt = 1'b1;
+
       end //itype_h
 
       default: begin
@@ -187,7 +190,7 @@ module control_unit (
         cuif.ALUOp = ALU_AND;
         cuif.ExtOp = ZEROEXT;
         cuif.opfunc = OTHERI;
-        cuif.halt = 1'b1;
+        cuif.halt = 1'b0;
 
      end //default
     endcase

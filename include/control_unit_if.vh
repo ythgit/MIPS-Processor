@@ -18,6 +18,7 @@ interface control_unit_if;
 
   // input signal for control unit
   word_t instr;
+  logic ihit, dhit;
   // output signals for control unit
   opfunc_t opfunc;
   regdst_t RegDst;
@@ -29,7 +30,7 @@ interface control_unit_if;
   logic halt;
 
   modport cu (
-    input instr,
+    input instr, ihit, dhit,
     output opfunc, RegDst, ALUSrc, MemtoReg, RegWEN, dWENi, dRENi,
            ALUOp, ExtOp, halt
   );
@@ -37,7 +38,7 @@ interface control_unit_if;
   modport tb (
     input opfunc, RegDst, ALUSrc, MemtoReg, RegWEN, dWENi, dRENi,
           ALUOp, ExtOp, halt,
-    output instr
+    output instr, ihit, dhit
   );
 
 endinterface
