@@ -25,8 +25,8 @@ assign ruif.iRENo = 1'b1;
 // request_unit's output logic
 always_ff @ (posedge CLK, negedge nRST) begin
   if (nRST == 0) begin
-    ruif.dRENo <= 1'b0;
-    ruif.dWENo <= 1'b0;
+    //ruif.dRENo <= 1'b0;
+    //ruif.dWENo <= 1'b0;
     dmask <= 1'b0;
   end else begin
     if (ruif.ihit == 1'b1) begin

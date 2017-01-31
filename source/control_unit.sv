@@ -1,5 +1,5 @@
 /*
-  Yiheng Chi
+  Yiheng
   chi14@purdue.edu
 
   control unit source code
@@ -34,11 +34,16 @@ module control_unit (
   assign jti = j_t'(cuif.instr);
 
   // assign truth values to tests
-  assign itype_r = rti.opcode inside {RTYPE};
-  assign itype_i = iti.opcode inside {ADDIU, ADDI, ANDI, BEQ, BNE, LUI, LW,
-                                      ORI, SLTI, SLTIU, SW, LL, SC, XORI};
-  assign itype_j = jti.opcode inside {J, JAL};
-  assign itype_h = iti.opcode inside {HALT};
+  always_comb begin
+    if (rti.opcode == RTYPE) itype_r = 1'b1;
+    else itype_r = 1'b0;
+    if (iti.opcode >= BEQ && iti.opcode <= SC) itype_i = 1'b1;
+    else itype_i = 1'b0;
+    if (jti.opcode == J || jti.opcode == JAL) itype_j = 1'b1;
+    else itype_j = 1'b0;
+    if (iti.opcode == HALT) itype_h = 1'b1;
+    else itype_h = 1'b0;
+  end
 
   always_comb begin
     casez(1)
@@ -63,7 +68,7 @@ module control_unit (
         if (rti.funct == SLL || rti.funct == SRL)
           cuif.ALUSrc = 1'b1;
 
-        casez(cuif.funct)
+        casez(rti.funct)
           ADDU: cuif.ALUOp = ALU_ADD;
           ADD:  cuif.ALUOp = ALU_ADD;
           AND:  cuif.ALUOp = ALU_AND;
@@ -116,7 +121,7 @@ module control_unit (
         if (iti.opcode == ANDI || iti.opcode == ORI || iti.opcode == XORI)
           cuif.ExtOp = ZEROEXT;
 
-        casez(cuif.opcode)
+        casez(iti.opcode)
           ADDIU: cuif.ALUOp = ALU_ADD;
           ADDI:  cuif.ALUOp = ALU_ADD;
           ANDI:  cuif.ALUOp = ALU_AND;
